@@ -1,12 +1,17 @@
 import os
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
+from werkzeug.middleware.proxy_fix import ProxyFix
 import requests
 
 load_dotenv()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('APP_SECRET_KEY')
+
+app.wsgi_app = ProxyFix(
+    app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
+)
 
 @app.route('/')
 def home():
