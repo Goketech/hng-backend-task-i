@@ -24,7 +24,7 @@ def hello():
     print('remote', request.environ['REMOTE_ADDR'])
     print('real', request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
     print(client_ip)
-    location = requests.get(f'http://api.weatherapi.com/v1/ip.json?key={api_key}&q={client_ip}').json()
+    location = requests.get(f'http://api.weatherapi.com/v1/ip.json?key={api_key}&q={client_ip}').json()['city']
     print(location)
 
     temperature = requests.get(f'http://api.weatherapi.com/v1/current.json?key={api_key}&q={location}').json()['current']['temp_c']
